@@ -1,6 +1,7 @@
-import numpy as np
+
 import cmath as c
 import math 
+import numpy as np
 
 def suma(a,b): 
     return a+b
@@ -63,11 +64,72 @@ def matrix_multiplication(Ma_A, Ma_B):
                 valor+= Ma_A[fila_a,elemento]*Ma_B[elemento,columna_b]
         Mult[fila_a,columna_b]=valor
     return Mult
+
+
+def matrix_multiplication_eficiente(Ma_A, Ma_B):
+    (n,m)=Ma_A.shape
+    (p,k)=Ma_B.shape
+    if(m!=p):
+        return "error en los tamaños de las matrices"
+    return (Ma_A @ Ma_B)
     
+
+#Pued ha
 
 print(matrix_multiplication(a,b))
 
 
 #ProgrammingDrill2.4.1 Write a function that accepts two complex vectors of lengt n 
 # and calculates their inner product.
+def inner_product(v, w):
+    if(len(v)==len(w)):
+        return np.inner(v, w)
+    else: #hacer que esta funcion tambien sirva para el prducto interno de matrices
+        return print("diferent vector len")         
+    
 
+print("Producto interno:",inner_product([1,1,1],[1,1,1]))
+
+
+
+# ProgrammingDrill2.4.2 Write a function that alculates the norm of a given complex vector.
+def norma_vector(v):
+    return np.linalg.norm(v)
+   
+
+print("a nrma",norma_vector([2]))
+
+
+#Programming Drill 2.4.3 Write a function that calculates the distance of two given complex vectors.
+def distancia_vectores(v,w):
+    new_vec=v-w
+    return math.sqrt(inner_product(new_vec,new_vec))
+    
+c=np.array([1,1])
+d=np.array([1,1])
+
+
+print("la dist",distancia_vectores(c,d))
+
+#Programming Drill 2.6.1 Write a function that accepts a square matrix and tells if it is hermitian.
+def is_hermitian(Ma):
+    filas, columnas = Ma.shape
+    if filas != columnas:
+        return "No es cuadrada"
+    Ma_adj = np.conjugate(Ma).T
+    if np.allclose(Ma, Ma_adj):
+        return True
+    else:
+        return False
+
+#Programming Drill 2.6.2 Write a function that accepts a square matrix and tells if it is unitary.
+def is_unitary(Ma):
+     filas, columnas = Ma.shape
+     if filas != columnas:
+        return "No es cuadrada"
+     Ma_adj = np.conjugate(Ma).T
+     result= matrix_multiplication_eficiente(Ma,Ma_adj)
+     identidad=np.eye(filas)
+     if np.array_equal(result, identidad):
+         return True
+     else: return False
