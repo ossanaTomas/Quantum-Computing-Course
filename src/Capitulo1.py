@@ -111,25 +111,27 @@ d=np.array([1,1])
 
 print("la dist",distancia_vectores(c,d))
 
+
 #Programming Drill 2.6.1 Write a function that accepts a square matrix and tells if it is hermitian.
 def is_hermitian(Ma):
     filas, columnas = Ma.shape
     if filas != columnas:
         return "No es cuadrada"
-    Ma_adj = np.conjugate(Ma).T
+    Ma_adj = Ma.conj().T
     if np.allclose(Ma, Ma_adj):
         return True
     else:
         return False
+
 
 #Programming Drill 2.6.2 Write a function that accepts a square matrix and tells if it is unitary.
 def is_unitary(Ma):
      filas, columnas = Ma.shape
      if filas != columnas:
         return "No es cuadrada"
-     Ma_adj = np.conjugate(Ma).T
+     Ma_adj = Ma.conj().T
      result= matrix_multiplication_eficiente(Ma,Ma_adj)
-     identidad=np.eye(filas)
-     if np.array_equal(result, identidad):
+     identidad=np.eye(filas, dtype=Ma.dtype)
+     if np.allclose(result, identidad):
          return True
      else: return False
